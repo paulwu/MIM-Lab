@@ -2,5 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "pip_dns_prefix": {
+            "value": "mim-20161210-"
+        },
+        "storageAccounts_name": {
+            "value": "mim20161210"
+        },
+        "workstation_ip": {
+            "value": "68.111.87.141"
+        }
     }
 }

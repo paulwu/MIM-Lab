@@ -2,17 +2,21 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "vm_adminAccountName": {
+      "defaultValue": "LabAdmin", 
+      "type": "String"
+    },
     "vm_adminPassword": {
-      "defaultValue": null,
+      "defaultValue": null, 
       "type": "SecureString"
     },
     "vm_CORE_name": {
       "defaultValue": "MIM-CORE",
-      "type": "string"
+      "type": "String"
     },
     "vm_DC-C_name": {
       "defaultValue": "DC-CORP",
-      "type": "string"
+      "type": "String"
     },
     "nsg_CorpNet_name": {
       "defaultValue": "NSG-CorpNet",
@@ -28,10 +32,14 @@
     },
     "pip_dns_prefix": {
       "defaultValue": "mim-[date]-",
-      "type": "string"
+      "type": "String"
     },
     "storageAccounts_name": {
-      "defaultValue": "mim-[date]",
+      "defaultValue": "mim[date]",
+      "type": "String"
+    },
+    "workstation_ip": {
+      "defaultValue": "x.x.x.x",
       "type": "String"
     }
   },
@@ -54,28 +62,15 @@
       "properties": {
         "securityRules": [
           {
-            "name": "RDP_LAUSD",
+            "name": "RDP_Workstation",
             "properties": {
               "protocol": "*",
               "sourcePortRange": "*",
               "destinationPortRange": "3389",
-              "sourceAddressPrefix": "204.108.72.0/22",
+              "sourceAddressPrefix": "[parameters('workstation_ip')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 130,
-              "direction": "Inbound"
-            }
-          },
-          {
-            "name": "RDP_HQ",
-            "properties": {
-              "protocol": "*",
-              "sourcePortRange": "*",
-              "destinationPortRange": "3389",
-              "sourceAddressPrefix": "68.101.123.127",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 131,
+              "priority": 110,
               "direction": "Inbound"
             }
           }
@@ -295,7 +290,7 @@
         },
         "osProfile": {
           "computerName": "[parameters('vm_DC-C_name')]",
-          "adminUsername": "LabAdmin",
+          "adminUsername": "[parameters('vm_adminAccountName')]",
           "windowsConfiguration": {
             "provisionVMAgent": true,
             "enableAutomaticUpdates": true
@@ -346,7 +341,7 @@
         },
         "osProfile": {
           "computerName": "[parameters('vm_CORE_name')]",
-          "adminUsername": "LabAdmin",
+          "adminUsername": "[parameters('vm_adminAccountName')]",
           "windowsConfiguration": {
             "provisionVMAgent": true,
             "enableAutomaticUpdates": true
