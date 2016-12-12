@@ -36,6 +36,9 @@
     <Content Include="Templates\azuredeploy.parameters.json" />
     <None Include="Wiki\img\1.VS Deploy1.jpg" />
     <None Include="Wiki\img\2.VS Deploy2.jpg" />
+    <None Include="Wiki\img\3.VS Deploy3.jpg" />
+    <None Include="Wiki\img\4.VS Deploy4.jpg" />
+    <None Include="Wiki\img\5.VS Deploy5.jpg" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
