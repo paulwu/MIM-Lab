@@ -34,6 +34,8 @@
     <Content Include="Deploy-AzureResourceGroup.ps1" />
     <Content Include="Templates\azuredeploy.json" />
     <Content Include="Templates\azuredeploy.parameters.json" />
+    <None Include="Wiki\img\1.VS Deploy1.jpg" />
+    <None Include="Wiki\img\2.VS Deploy2.jpg" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

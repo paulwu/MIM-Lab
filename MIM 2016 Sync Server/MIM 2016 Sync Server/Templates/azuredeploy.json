@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "vm_adminAccountName": {
-      "defaultValue": "LabAdmin", 
+      "defaultValue": "LabAdmin",
       "type": "String"
     },
     "vm_adminPassword": {
@@ -24,10 +24,6 @@
     },
     "vn_CorpNet_name": {
       "defaultValue": "CorpNet",
-      "type": "String"
-    },
-    "vn_PrivNet_name": {
-      "defaultValue": "PrivNet",
       "type": "String"
     },
     "pip_dns_prefix": {
@@ -224,36 +220,6 @@
             "name": "Gateway",
             "properties": {
               "addressPrefix": "10.1.0.64/29"
-            }
-          }
-        ]
-      },
-      "resources": [],
-      "dependsOn": []
-    },
-    {
-      "comments": "/Microsoft.Network/virtualNetworks/PrivNet'.",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('vn_PrivNet_name')]",
-      "apiVersion": "2016-03-30",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "10.2.0.0/24"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "Subnet-1",
-            "properties": {
-              "addressPrefix": "10.2.0.0/26"
-            }
-          },
-          {
-            "name": "Gateway",
-            "properties": {
-              "addressPrefix": "10.2.0.64/29"
             }
           }
         ]
