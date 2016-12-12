@@ -34,11 +34,29 @@
     <Content Include="Deploy-AzureResourceGroup.ps1" />
     <Content Include="Templates\azuredeploy.json" />
     <Content Include="Templates\azuredeploy.parameters.json" />
+    <None Include="Scripts\DC-CORP\DC-CORP - 1 - Install-WindowsFeature.ps1" />
+    <None Include="Scripts\DC-CORP\DC-CORP - 2 - Install-ADDSForest.ps1" />
+    <None Include="Scripts\DC-CORP\DC-CORP - 3 - Finish-WindowsFeature.ps1" />
+    <None Include="Scripts\DC-CORP\DC-CORP - 4 - DNS and Accounts Prerequisite Tasks.ps1" />
+    <None Include="Scripts\DC-CORP\DC-CORP - 5 - Install-AdcsCertificationAuthority.ps1" />
+    <None Include="Scripts\DC-CORP\DC-CORP - 6 - Configure GPO.ps1" />
+    <None Include="Scripts\MIM-CORE\1. Enable SQL SA.sql" />
+    <None Include="Scripts\MIM-CORE\2. Create HR Database.sql" />
+    <None Include="Scripts\MIM-CORE\IDM-SQL-Install SQL.cmd" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - 1 - Add-Computer.ps1" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - 2 - Install SQL.ps1" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - 3 - Install-WindowsFeature.ps1" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - 4 - Test SMTP Server.ps1" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - 5 -LogOff.ps1" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - 7 - Documentor.ps1" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - x - New-MIMPortalQuickStart.ps1" />
+    <None Include="Scripts\MIM-CORE\MIMTools.psm1" />
     <None Include="Wiki\img\1.VS Deploy1.jpg" />
     <None Include="Wiki\img\2.VS Deploy2.jpg" />
     <None Include="Wiki\img\3.VS Deploy3.jpg" />
     <None Include="Wiki\img\4.VS Deploy4.jpg" />
     <None Include="Wiki\img\5.VS Deploy5.jpg" />
+    <None Include="Wiki\img\6.VS Deploy6.jpg" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
