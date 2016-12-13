@@ -1,0 +1,349 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualMachines_DC_CORP_adminPassword": {
+      "defaultValue": null,
+      "type": "SecureString"
+    },
+    "virtualMachines_MIM_CORE_adminPassword": {
+      "defaultValue": null,
+      "type": "SecureString"
+    },
+    "virtualMachines_DC_CORP_name": {
+      "defaultValue": "DC-CORP",
+      "type": "String"
+    },
+    "virtualMachines_MIM_CORE_name": {
+      "defaultValue": "MIM-CORE",
+      "type": "String"
+    },
+    "networkInterfaces_nic_dc_corp_name": {
+      "defaultValue": "nic_dc-corp",
+      "type": "String"
+    },
+    "networkInterfaces_nic_mim_core_name": {
+      "defaultValue": "nic_mim-core",
+      "type": "String"
+    },
+    "networkSecurityGroups_NSG_CorpNet_name": {
+      "defaultValue": "NSG-CorpNet",
+      "type": "String"
+    },
+    "publicIPAddresses_PIP_DC_CORP_name": {
+      "defaultValue": "PIP-DC-CORP",
+      "type": "String"
+    },
+    "publicIPAddresses_PIP_MIM_CORE_name": {
+      "defaultValue": "PIP-MIM-CORE",
+      "type": "String"
+    },
+    "virtualNetworks_CorpNet_name": {
+      "defaultValue": "CorpNet",
+      "type": "String"
+    },
+    "storageAccounts_mim20161210_name": {
+      "defaultValue": "mim20161210",
+      "type": "String"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "comments": "Generalized from resource: '/subscriptions/f6cba2f9-73fd-4ae7-ad41-5ca3001a6c5a/resourceGroups/MIM2016SyncServer/providers/Microsoft.Compute/virtualMachines/DC-CORP'.",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('virtualMachines_DC_CORP_name')]",
+      "apiVersion": "2015-06-15",
+      "location": "westcentralus",
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_A1"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2012-R2-Datacenter",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "[parameters('virtualMachines_DC_CORP_name')]",
+            "createOption": "FromImage",
+            "vhd": {
+              "uri": "[concat('https', '://', parameters('storageAccounts_mim20161210_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_DC_CORP_name'),'20160819.vhd'))]"
+            },
+            "caching": "ReadWrite"
+          },
+          "dataDisks": []
+        },
+        "osProfile": {
+          "computerName": "[parameters('virtualMachines_DC_CORP_name')]",
+          "adminUsername": "LabAdmin",
+          "windowsConfiguration": {
+            "provisionVMAgent": true,
+            "enableAutomaticUpdates": true
+          },
+          "secrets": [],
+          "adminPassword": "[parameters('virtualMachines_DC_CORP_adminPassword')]"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_nic_dc_corp_name'))]"
+            }
+          ]
+        }
+      },
+      "resources": [],
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_mim20161210_name'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_nic_dc_corp_name'))]"
+      ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/f6cba2f9-73fd-4ae7-ad41-5ca3001a6c5a/resourceGroups/MIM2016SyncServer/providers/Microsoft.Compute/virtualMachines/MIM-CORE'.",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('virtualMachines_MIM_CORE_name')]",
+      "apiVersion": "2015-06-15",
+      "location": "westcentralus",
+      "tags": {},
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_A1"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2012-R2-Datacenter",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "[parameters('virtualMachines_MIM_CORE_name')]",
+            "createOption": "FromImage",
+            "vhd": {
+              "uri": "[concat('https', '://', parameters('storageAccounts_mim20161210_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_MIM_CORE_name'),'20160819.vhd'))]"
+            },
+            "caching": "ReadWrite"
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "name": "MIM-Bits",
+              "createOption": "Empty",
+              "vhd": {
+                "uri": "[concat('https', '://', parameters('storageAccounts_mim20161210_name'), '.blob.core.windows.net', '/vhds/MIM-Bits.vhd')]"
+              },
+              "caching": "ReadWrite",
+              "diskSizeGB": 1023
+            }
+          ]
+        },
+        "osProfile": {
+          "computerName": "[parameters('virtualMachines_MIM_CORE_name')]",
+          "adminUsername": "LabAdmin",
+          "windowsConfiguration": {
+            "provisionVMAgent": true,
+            "enableAutomaticUpdates": true
+          },
+          "secrets": [],
+          "adminPassword": "[parameters('virtualMachines_MIM_CORE_adminPassword')]"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_nic_mim_core_name'))]"
+            }
+          ]
+        }
+      },
+      "resources": [],
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_mim20161210_name'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_nic_mim_core_name'))]"
+      ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/f6cba2f9-73fd-4ae7-ad41-5ca3001a6c5a/resourceGroups/MIM2016SyncServer/providers/Microsoft.Network/networkInterfaces/nic_dc-corp'.",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[parameters('networkInterfaces_nic_dc_corp_name')]",
+      "apiVersion": "2016-03-30",
+      "location": "westcentralus",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAddress": "10.1.0.10",
+              "privateIPAllocationMethod": "Static",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_PIP_DC_CORP_name'))]"
+              },
+              "subnet": {
+                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_CorpNet_name')), '/subnets/Subnet-1')]"
+              }
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": [
+            "10.1.0.10"
+          ]
+        },
+        "enableIPForwarding": false,
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_CorpNet_name'))]"
+        }
+      },
+      "resources": [],
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_PIP_DC_CORP_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_CorpNet_name'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_CorpNet_name'))]"
+      ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/f6cba2f9-73fd-4ae7-ad41-5ca3001a6c5a/resourceGroups/MIM2016SyncServer/providers/Microsoft.Network/networkInterfaces/nic_mim-core'.",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[parameters('networkInterfaces_nic_mim_core_name')]",
+      "apiVersion": "2016-03-30",
+      "location": "westcentralus",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAddress": "10.1.0.11",
+              "privateIPAllocationMethod": "Static",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_PIP_MIM_CORE_name'))]"
+              },
+              "subnet": {
+                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_CorpNet_name')), '/subnets/Subnet-1')]"
+              }
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": [
+            "10.1.0.10"
+          ]
+        },
+        "enableIPForwarding": false,
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_CorpNet_name'))]"
+        }
+      },
+      "resources": [],
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_PIP_MIM_CORE_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_CorpNet_name'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_CorpNet_name'))]"
+      ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/f6cba2f9-73fd-4ae7-ad41-5ca3001a6c5a/resourceGroups/MIM2016SyncServer/providers/Microsoft.Network/networkSecurityGroups/NSG-CorpNet'.",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[parameters('networkSecurityGroups_NSG_CorpNet_name')]",
+      "apiVersion": "2016-03-30",
+      "location": "westcentralus",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "RDP_Workstation",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "3389",
+              "sourceAddressPrefix": "68.111.87.141",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 110,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      },
+      "resources": [],
+      "dependsOn": []
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/f6cba2f9-73fd-4ae7-ad41-5ca3001a6c5a/resourceGroups/MIM2016SyncServer/providers/Microsoft.Network/publicIPAddresses/PIP-DC-CORP'.",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('publicIPAddresses_PIP_DC_CORP_name')]",
+      "apiVersion": "2016-03-30",
+      "location": "westcentralus",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "idleTimeoutInMinutes": 4,
+        "dnsSettings": {
+          "domainNameLabel": "mim-20161210-dc-corp"
+        }
+      },
+      "resources": [],
+      "dependsOn": []
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/f6cba2f9-73fd-4ae7-ad41-5ca3001a6c5a/resourceGroups/MIM2016SyncServer/providers/Microsoft.Network/publicIPAddresses/PIP-MIM-CORE'.",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('publicIPAddresses_PIP_MIM_CORE_name')]",
+      "apiVersion": "2016-03-30",
+      "location": "westcentralus",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "idleTimeoutInMinutes": 4,
+        "dnsSettings": {
+          "domainNameLabel": "mim-20161210-mim-core"
+        }
+      },
+      "resources": [],
+      "dependsOn": []
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/f6cba2f9-73fd-4ae7-ad41-5ca3001a6c5a/resourceGroups/MIM2016SyncServer/providers/Microsoft.Network/virtualNetworks/CorpNet'.",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('virtualNetworks_CorpNet_name')]",
+      "apiVersion": "2016-03-30",
+      "location": "westcentralus",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.1.0.0/24"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "Subnet-1",
+            "properties": {
+              "addressPrefix": "10.1.0.0/26"
+            }
+          },
+          {
+            "name": "Gateway",
+            "properties": {
+              "addressPrefix": "10.1.0.64/29"
+            }
+          }
+        ]
+      },
+      "resources": [],
+      "dependsOn": []
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/f6cba2f9-73fd-4ae7-ad41-5ca3001a6c5a/resourceGroups/mim2016syncserver/providers/Microsoft.Storage/storageAccounts/mim20161210'.",
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "Storage",
+      "name": "[parameters('storageAccounts_mim20161210_name')]",
+      "apiVersion": "2016-01-01",
+      "location": "westcentralus",
+      "tags": {},
+      "properties": {},
+      "resources": [],
+      "dependsOn": []
+    }
+  ]
+}

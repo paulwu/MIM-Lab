@@ -25,9 +25,6 @@
   <Import Condition=" Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets') " Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets" />
   <!-- vertag<:>end -->
   <ItemGroup>
-    <Folder Include="Templates\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
@@ -43,14 +40,15 @@
     <None Include="Scripts\MIM-CORE\1. Enable SQL SA.sql" />
     <None Include="Scripts\MIM-CORE\2. Create HR Database.sql" />
     <None Include="Scripts\MIM-CORE\IDM-SQL-Install SQL.cmd" />
-    <None Include="Scripts\MIM-CORE\MIM-CORE - 1 - Add-Computer.ps1" />
-    <None Include="Scripts\MIM-CORE\MIM-CORE - 2 - Install SQL.ps1" />
-    <None Include="Scripts\MIM-CORE\MIM-CORE - 3 - Install-WindowsFeature.ps1" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - 1 - Join Domain.ps1" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - 3 - Install SQL.ps1" />
+    <None Include="Scripts\MIM-CORE\MIM-CORE - 2 - Install-WindowsFeature.ps1" />
     <None Include="Scripts\MIM-CORE\MIM-CORE - 4 - Test SMTP Server.ps1" />
     <None Include="Scripts\MIM-CORE\MIM-CORE - 5 -LogOff.ps1" />
     <None Include="Scripts\MIM-CORE\MIM-CORE - 7 - Documentor.ps1" />
     <None Include="Scripts\MIM-CORE\MIM-CORE - x - New-MIMPortalQuickStart.ps1" />
     <None Include="Scripts\MIM-CORE\MIMTools.psm1" />
+    <None Include="Templates\test.json" />
     <None Include="Wiki\img\1.VS Deploy1.jpg" />
     <None Include="Wiki\img\2.VS Deploy2.jpg" />
     <None Include="Wiki\img\3.VS Deploy3.jpg" />
